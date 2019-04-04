@@ -22,6 +22,9 @@ identifiable. Authorization and authentication of pariticpants enables priviledg
 collected. The decentralized, distributed architecture results in a network that is not vulnerable to
 single point of failure which has the potential to disrupt the entire network.
 
-Proposed Solution [ Prototype Description ]
+Proposed Solution [ Prototype Description ] : 
+
 • The permissioned network can provide privacy by granting different levels of access and
 also provides accountability with a record of all the transactions for an identity using certificate authorities.
+We will use the cryptogen tool to generate the cryptographic material (x509 certs) for our various network entities.The certificates are based on a standard PKI implementation where validation is achieved by reaching a common trust anchor. Cryptogen consumes a file-``crypto-config.yaml``-that contains the network topology and allows us to generate a library of certificates for both the Organizations and the components that belong to those Organizations.  Each Organization is provisioned a unique root certificate(``ca-cert``), that binds specific components (peers and orderers) to that Org.  Transactions and communications within Fabric are signed by an entity's private key(``keystore``), and then verified by means of a public key (``signcerts``).  You will notice a "count" variable within this file.  We use this to specify the number of peers per Organization; in our case it's two peers per Org.  The rest of this template is extremely self-explanatory.
+After we run the tool, the certs will be parked in a folder titled ``crypto-config``.
