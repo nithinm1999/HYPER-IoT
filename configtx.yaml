@@ -1,0 +1,102 @@
+
+---
+Organizations:
+
+    - &SuperOrderer
+        Name: SuperOrderer
+        ID: SuperOrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/example.com/msp
+
+    - &GatewayOrg
+        Name: GatewayOrg
+        ID: GatewayOrgMSP
+        MSPDir: crypto-config/peerOrganizations/GatewayOrg.example.com/msp
+
+    - &UserOrg
+        Name: UserOrg
+        ID: UserOrgMSP
+        MSPDir: crypto-config/peerOrganizations/UserOrg.example.com/msp
+
+    - &ServiceOrg
+        Name: ServiceOrg
+        ID: ServiceOrgMSP
+        MSPDir: crypto-config/peerOrganizations/ServiceOrg.example.com/msp
+
+Orderer: &OrdererDefaults
+    OrdererType: solo
+    Addresses:
+        - orderer.example.com:7050
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+
+    Kafka:
+        Brokers:
+            - 127.0.0.1:9092
+    Organizations:
+
+Application: &ApplicationDefaults
+    Organizations:
+
+Capabilities:
+    Global: &ChannelCapabilities
+        V1_1: true
+
+    Orderer: &OrdererCapabilities
+        V1_1: true
+
+    Application: &ApplicationCapabilities
+        V1_1: true
+
+Profiles:
+    OrdererGenesis:
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *SuperOrderer
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                    - *GatewayOrg
+                    - *UserOrg
+                    - *ServiceOrg
+    
+    ChannelUG:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *GatewayOrg
+                - *UserOrg
+
+            Capabilities:
+                <<: *ApplicationCapabilities
+    
+    ChannelUS:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *UserOrg
+		- *ServiceOrg
+                
+            Capabilities:
+                <<: *ApplicationCapabilities
+    
+    ChannelGS:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *GatewayOrg
+		- *ServiceOrg
+                
+            Capabilities:
+                <<: *ApplicationCapabilities
+
