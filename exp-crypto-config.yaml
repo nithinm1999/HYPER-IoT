@@ -1,0 +1,39 @@
+OrdererOrgs:
+  - Name: GatewayOrderer
+    Domain: example.com
+    Specs:
+      - Hostname: GatewayOrderer
+  
+  - Name: ServiceOrderer
+    Domain: example.com
+    Specs:
+      - Hostname: ServiceOrderer
+
+    
+
+
+PeerOrgs:
+  - Name: GatewayOrg
+    Domain: GatewayOrg.example.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 2
+
+  - Name: UserOrg
+    Domain: UserOrg.example.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 2
+
+  - Name: ServiceOrg
+    Domain: ServiceOrg.example.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 2
+    
