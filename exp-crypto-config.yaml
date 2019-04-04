@@ -1,16 +1,8 @@
 OrdererOrgs:
-  - Name: GatewayOrderer
+  - Name: SuperOrderer
     Domain: example.com
     Specs:
-      - Hostname: GatewayOrderer
-  
-  - Name: ServiceOrderer
-    Domain: example.com
-    Specs:
-      - Hostname: ServiceOrderer
-
-    
-
+      - Hostname: SuperOrderer
 
 PeerOrgs:
   - Name: GatewayOrg
